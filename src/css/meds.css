@@ -1,0 +1,171 @@
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+ #body-med {
+  font-family: "M PLUS Rounded 1c", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 100vh;
+  background: url(../img/medcab.webp) no-repeat center center/cover;
+  background-attachment: fixed;
+}
+
+#home-btn{
+  display: flex;
+  padding: 8px;
+  border-radius: 20px;
+  color: #010103;
+  font-size: 1.1rem;
+  background: #A9E8E8;
+  border: var(--border);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  align-items: center;
+  text-decoration: none;
+}
+
+#home-btn:hover{
+  transform: scale(1.1);
+  background: #3b5353;
+}
+
+.med-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100%;
+  padding: 0 20px;
+
+}
+
+.todo-app-meds{
+  width: 450px;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 30px;
+  color: #010103;
+  border: var(--border);
+  border-radius: 20px;
+  box-shadow: var(--box-shadow);
+  backdrop-filter: blur(10px);
+}
+
+.med-type-dropdown{
+  padding: 5px;
+  outline: none;
+  border-radius: 20px;
+  background-color: #A9E8E8;
+  margin-left: 3px;
+}
+
+.todos-container-meds{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+#task-list-meds{
+  
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+#task-list-meds li {
+  display: flex;
+  
+  justify-content: flex-start;
+  background: rgba(169, 232, 232, 0.5);
+  padding: 8px 10px;
+  border-radius: 30px;
+  font-size: 1.2rem;
+  color: #010103;
+  position: relative;
+  transition: box-shadow 0.2s ease;
+  word-break: break-all;
+  
+  justify-content: space-between;
+  align-items: center;
+  margin: 1px 0 1px;
+}
+
+.med-info{
+  display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1; 
+}
+
+.med-item.out-of-stock {
+    background: rgba(255, 0, 0, 0.05); /
+    border-left: 5px solid #ff4d4d;    
+    transition: all 0.3s ease;
+}
+
+.med-item.out-of-stock .counter {
+    color: #ff4d4d;
+    font-weight: bold;
+}
+
+#task-list-meds li:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+#task-list-meds li strong {
+  flex: 1;
+  margin-left: 10px;
+  word-wrap: break-word;
+}
+
+#task-list-meds span{
+  width: 10%;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  
+}
+
+#task-list-meds a{
+  font-size: 1rem;
+  text-decoration: underline;
+}
+
+#task-list-meds span.counter{
+  font-size: 15px;
+  border-right: 2px solid rgba(0,0,0,0.2);
+  border-left: 2px solid rgba(0,0,0,0.2);
+  pointer-events: none;   
+}
+
+
+
+div.task-buttons{
+  display: inline;
+  margin-left: 5px;
+  border-radius: 20px;
+}
+
+div.task-buttons :hover{
+  border-radius: 30px;
+  background: #00b09b;
+}
+
+.empty-imag {
+    transition: opacity 0.3s ease;
+    max-width: 150px;
+    margin-top: 20px;
+}

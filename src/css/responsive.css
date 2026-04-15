@@ -1,0 +1,30 @@
+/* media Queries pra telas menos etc */
+
+@media (max-width: 950px) {
+    .container {
+        grid-template-columns: 1fr; 
+    }
+}
+
+@media screen and (max-height: 800px) {
+    .dashboard-grid {
+        align-items: start; 
+    }
+}
+
+
+/* CRITICAL: Allow boxes to shrink on small phones */
+.todo-app, 
+.daily-meds-section, 
+.daily-alarms-tracker, 
+.notes, 
+.groceries, 
+.bill-container, 
+.bottom, 
+.kitchen-timer, 
+.fixtures-container {
+    width: 100% !important;  
+    max-width: 450px !important; 
+    margin-bottom: 10px;
+}
+

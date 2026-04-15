@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./src/css/styles.css" />
+    <link rel="stylesheet" href="./src/css/responsive.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Federant&family=M+PLUS+Rounded+1c&family=Playwrite+CU+Guides&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wght@0,100..900;1,100..900&family=Space+Grotesk:wght@300..700&display=swap"
+      rel="stylesheet"
+    />
+
+    
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link 
+    rel="stylesheet" 
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" 
+    />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <title>Day planner</title>
+    <link rel="icon" href="https://fav.farm/📝" />
+    <style>
+    /* Hide the whole page until Firebase says 'Yes' */
+    body { display: none; }
+    </style>
+  </head>
+  <body>
+    
+      <div class="container">
+      
+        <section class="todo-app">
+          <button id="logout-btn" title="Exit Room" window.location.href = 'login.html?logout=true';>
+          <i class="fa-solid fa-right-from-bracket">logout</i>
+        </button>
+          <span id="user-display-name"></span>
+          <h1>My Day Planner 📝</h1>
+          <div class="stat-container">
+            <div class="details">
+              <h3>You are doing great!</h3>
+              <div id="progressbar">
+                <div id="progress"></div>
+              </div>
+            </div>
+          <div class="stats-number">
+            <p id="numbers">0 / 0</p>
+          </div>  
+          </div>
+          <form class="input-area">
+            <input
+              type="text"
+              id="input-box"
+              class="input"
+              placeholder="Type a task"
+              maxlength="45"
+            />
+            <button type="submit" id="add-task-btn">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </form>
+          <h3>My Tasks</h3>
+          <div class="todos-container">
+            <ul id="task-list"></ul>
+            <audio id="check-sound" src="./src/audio/check.mp3"></audio>
+          </div>
+          <img class="empty-imag" src="./src/img/empty.png" alt="empty" />
+        </section>
+
+        <section class="daily-meds-section">
+          <div class="info-tooltip">
+            <i class="fa-solid fa-circle-info"></i>
+            <span class="tooltip-text">The checks will reset every day, if you remember to take your medicine and check the mark the alarm will not play!</span>
+        </div>
+          <h2>Daily Meds alarm 💊</h2>
+        <div class="med-alarm-input">
+          <input type="text" id="med-input-box" class="input" placeholder="Medication name">
+          <input type="time" id="med-time-box" class="input">
+          <button id="add-med-alarm-btn"><i class="fa-solid fa-bell"></i></button>
+        </div>
+        <div class="alarm-volume-control">
+          <i class="fa-solid fa-volume-low"></i>
+          <input type="range" id="med-volume-slider" min="0.1" max="1" step="0.1" value="0.8">
+        <i class="fa-solid fa-volume-high"></i> 
+        </div>
+        <audio id="med-alarm-sound" src="./src/audio/med_alarm.mp3" preload="auto"></audio>
+        <h3>Today's meds</h3>
+
+        <div class="todos-container">
+        <ul id="daily-med-list"></ul>
+        <audio id="check-sound" src="./src/audio/check.mp3"></audio>
+        </div>
+
+          <div>
+            <a id="med-sec-btn" href="meds.html"><img src="./src/img/icons8-medical-48.png" />Med cabinet</a>
+          </div>
+          <div id="attention-div" class="attention-box" style="display: none;">
+          <div class="attention-header">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <span>Inventory Attention Required</span>
+          </div>
+
+          <div id="daily-warnings" class="med-sub-section">
+              <h3 class="type-title">💊 Daily Use (Auto-Deduct)</h3>
+              <ul id="low-supply-daily" class="warning-list"></ul>
+          </div>
+
+          <div id="nondaily-warnings" class="med-sub-section">
+              <h3 class="type-title">📦 Non-Daily (Manual Track)</h3>
+              <ul id="low-supply-nondaily" class="warning-list"></ul>
+          </div>
+
+            <ul id="low-supply-list"></ul>
+          </div>
+      </section>
+
+      <section class="daily-alarms-tracker">
+        <h2>Clock & Alarms 🕐</h2>
+        <div class="clock">
+          <div>
+            <span id="hour">00 </span>
+            
+            <span class="text">Hours</span>
+          </div>
+          <div class="separator">:</div>
+          <div>
+            <span id="minutes">00 </span>
+            <span class="text">Mins</span>
+          </div>
+          <div class="separator">:</div>
+          <div>
+            <span id="seconds">00 </span>
+            <span class="text">Secs</span>
+          </div>
+      </div>
+      <div class="">
+        <input type="text" id="alarm-input-box" class="input" placeholder="e.g. Wash clothes">
+        <input type="time" id="alarm-time-box" class="input">
+        <button id="add-alarm-btn"><i class="fa-solid fa-bell"></i></button>
+         </div> 
+        <div class="alarm-volume-control">
+            <i class="fa-solid fa-volume-low"></i>
+            <input type="range" id="reminder-volume-slider" min="0.1" max="1" step="0.1" value="0.8">
+          <i class="fa-solid fa-volume-high"></i> 
+          </div>
+        <audio id="daily-alarm-sound" src="./src/audio/daily_alarm.wav" preload="auto"></audio>
+        
+        <h3>Reminders</h3>
+          <ul id="daily-alarm-list">
+        </ul>
+      </section>
+      
+      <section class="kitchen-timer">
+      <audio id="kitchen-timer-sound-start" src="./src/audio/timer.mp3" preload="auto"></audio>
+      <audio id="kitchen-timer-sound" src="./src/audio/alarm-kitchen.mp3" preload="auto"></audio>
+      <audio id="kitchen-alarm-sound" src="./src/audio/alarm-food-ready.mp3" preload="auto"></audio>
+      <h2>Kitchen timer</h2>
+      <div class="chicken-images">
+      <img class="chicken-timer" id="chicken-idle" src="./src/img/chicken_timer1.png">
+      <img class="chicken-timer" id="chicken-cooking" src="./src/img/chicken_timer2.png" style="display:none;">
+      <img class="chicken-timer" id="chicken-ready" src="./src/img/chicken_timer3.png" style="display:none;">
+      <div id="chicken-speech" class="speech-bubble"></div>
+      </div>
+      <div class="volume-row">
+          <i class="fa-solid fa-volume-low"></i>
+          <input type="range" id="kitchen-volume" min="0" max="1" step="0.1" value="0.5">
+          <i class="fa-solid fa-volume-high"></i>
+        </div>
+
+      <div class="display-area">
+        <div class="chick chick-1"></div>
+        <div class="chick chick-2"></div>
+        <div class="chick chick-3"></div>
+        <div class="chick chick-4"></div>
+        <div class="chick chick-5"></div>
+        <div class="chick chick-6"></div>
+        <div class="chick chick-7"></div>
+        <div class="chick chick-8"></div>
+
+      <div class="timer-display">
+      <span id="hourInput">00</span>
+      <div class="separator">:</div>
+      <span id="minInput">00</span>
+      <div class="separator">:</div>
+      <span id="secDisplay">00</span>
+      </div>
+      <div class="divider"></div>
+    </div>
+    <div class="timer-adds">
+      <button id="add-30sec">+0:30</button>
+      <button id="add-1min">+1:00</button>
+      <button id="add-5min">+5:00</button>
+      <button id="add-30min">+30:00</button>
+    </div>
+  
+  <div class="timer-controls">
+  <button class="main-play" id="playTimerBtn"><i class="fa-solid fa-play"></i></button>
+  <div id="runningControls" style="display: none; gap: 10px;">
+        <button id="pauseTimerBtn" class="timer-btn">
+            <i class="fa-solid fa-pause"></i>
+        </button>
+        <button id="resetTimerBtn" class="timer-btn">
+            <i class="fa-solid fa-rotate-left"></i>
+        </button>
+    </div>
+</div>    
+      </section>
+
+      <section class="bill-container">
+            <h2>Bills Calculator 💷</h2>
+        <div class="next-payment-highlight">
+            <p>Next Payment: <strong id="next-bill-label">---</strong></p>
+            </div> 
+            <p>Due in: <span id="days-left">0 days</span></p>
+        
+
+        <div class="bill-total">
+            <span>This Month's Total:</span>
+            <strong id="monthly-total-display">$ 0.00</strong>
+        </div>
+
+        <div class="bill-input-group">
+            <label>Company name: </label> 
+            <input type="text" id="bill-label" placeholder="e.g. Vodafone">
+            
+            <label>Amount:</label> 
+            <input type="text" id="bill-amount" placeholder="0.00" min="0" inputmode="numeric" maxlength="9">
+              
+            <label>Category:</label>
+            <select id="bill-category">
+                    <option value="" disabled selected>Bill category</option>
+                    <option value="Rent">🏠 Rent</option>
+                    <option value="Insurance">🛡️ Insurance</option>
+                    <option value="Phone">📱 Phone</option>
+                    <option value="Car">🚗 Car</option>
+                    <option value="Credit card">💳 Credit card</option>
+                    <option value="Bank">🏦 Bank</option>
+                    <option value="Investments">💷 Investments</option>
+                    <option value="Food">🍴 Food</option>
+                    <option value="Electricity">⚡ Electricity</option>
+                    <option value="Water">💧 Water</option>
+                    <option value="Subscription">📺 Subs</option>
+                    <option value="Internet">🛜 Internet</option>
+                    <option value="Pet">🐕‍🦺 Pet</option>
+                    <option value="Medical">🩺 Medical</option>
+                    <option value="Emergency">💥 Emergency</option>
+                    <option value="Shopping">👜 Shopping</option> 
+                    <option value="Hobbies">🎮 Hobbies</option>
+                    <option value="Travel">🛬 Travel</option>
+                    <option value="Other">🌴 Other</option>
+
+
+                    
+                    
+                    
+
+            </select>
+
+            <label>Frequency:</label>
+          <select id="bill-frequency">
+              <option value="monthly">🔄 Monthly</option>
+              <option value="installment">📅 Installment</option>
+          </select>
+
+          <div class="row-container" id="inst-config" style="display:none;">
+            <div class="input-item">
+              <label>Current</label>
+              <input type="number" id="current-inst" placeholder="0">
+          </div>
+          <div class="input-item">
+              <label>Total</label>
+              <input type="number" id="inst-total" placeholder="0">
+          </div>
+          
+          </div>
+
+        <div></div>
+        <label>Date:</label>
+        <input type="date" id="bill-due-date">
+       
+        <div></div>
+        <button id="save-bill-btn"><i class="fa-solid fa-plus"></i></button>
+        </div>
+
+        <ul id="bill-list"></ul>
+       
+      </section>
+
+      <section class="groceries" style="position: relative;">
+      <div class="sync-indicator" title="Cloud Sync Active"></div>
+      <div class="info-tooltip-notes">
+            <i class="fa-solid fa-circle-info"></i>
+            <span class="tooltip-text">The list will auto save!</span>
+          </div>
+      <h2>Groceries 🛒</h2>
+      <textarea id="grocery-note" class="grocery-notepad" placeholder="Milk..."></textarea>
+    
+      <!-- The Cloud Pop-up Icon -->
+      <div id="cloud-sync-popup" class="cloud-popup">
+          <i class="fa-solid fa-cloud"></i>
+          <a>saving...</a>
+      </div>
+      </section>
+      
+
+      <section class="notes">
+        <div>
+          <div class="info-tooltip-notes">
+            <i class="fa-solid fa-circle-info"></i>
+            <span class="tooltip-text">Notes will auto save!</span>
+          </div>
+          <h4>Notes🖊️</h4>
+          <textarea id="notes-area1" placeholder="e.g. Meeting at 14:00"></textarea>
+          <textarea id="notes-area2" placeholder="e.g. Dinner with friends friday!!"></textarea>
+          <textarea id="notes-area3" placeholder="e.g. Take dog to groomer on Tue!!"></textarea>
+          <textarea id="notes-area4" placeholder="e.g. Supermarket thurdays night!"></textarea>
+        </div>
+      </section>
+            
+      
+      <section class="relax-corner">
+        <div class="info-tooltip">
+            <i class="fa-solid fa-circle-info"></i>
+            <span class="tooltip-text">Click a photo to start a vibe. Clicking a new one switches the track!</span>
+        </div>
+        <h2>Relax Corner</h2>
+        <div class="player-photos">
+        <img src="./src/img/birds_pic.jpg" class="player-selector" data-sound="forest" title="Forest">
+        <img src="./src/img/rain_pic.jpg" class="player-selector" data-sound="rain" title="Rain">
+        <img src="./src/img/piano_pic.jpg" class="player-selector" data-sound="piano" title="Piano">
+        <img src="./src/img/city_pic.jpg" class="player-selector" data-sound="city" title="City">
+        <img src="./src/img/crow.jpg" class="player-selector" data-sound="crows" title="Crows">
+        </div>
+        <div class="background-player">
+        <div class="volume-row">
+          <i class="fa-solid fa-volume-low"></i>
+          <input type="range" id="player-volume" min="0" max="1" step="0.1" value="0.5">
+          <i class="fa-solid fa-volume-high"></i>
+        </div>
+        </div>
+        <div class="buttons-row">
+          <button id="stop-audio" class="media-player-btn"><i class="fa-solid fa-square"></i></button>
+          <button id="pause-audio" class="media-player-btn"><i class="fa-solid fa-pause"></i></button>
+          <button id="play-audio" class="media-player-btn"><i class="fa-solid fa-play"></i></button>
+        </div>
+
+        <div class="gifs">
+          <h4>Tasks companions - Let's Finish our tasks</h4>
+            <img class="gif" src="./src/img/dog.gif" />
+            <img class="gif" src="./src/img/ectdog.gif" />
+            <img class="gif" src="./src/img/cats.gif" />
+          
+          <p>Kindness can transform the world 🙂</p>
+          </div>
+      
+        <div class="bible-verse-container">
+          <div class="verse-card">
+          <h5>Bible quotes ✝️</h5>
+          <p id="verse-text">Loading inspiration...</p>
+          <cite id="verse-reference"></cite>    
+        </div>
+        </div>
+
+        <audio id="audio-rain" src="./src/audio/rain.wav" loop></audio>
+        <audio id="audio-forest" src="./src/audio/nature_birds.wav" loop></audio>
+        <audio id="audio-city" src="./src/audio/city.mp3" loop></audio>
+        <audio id="audio-piano" src="./src/audio/piano.mp3" loop></audio>
+        <audio id="audio-crows" src="./src/audio/crows.mp3" loop></audio>   
+        
+      </section>
+      
+      
+      <section id="palmeiras-tracker" class="fixtures-container" style="display: none;">
+      <h2>Prox jogo do Verdão 🐷</h2>
+      <div id="fixtures-list">
+        <p class="loading">Fetching next match...</p>
+      </div>
+      <div id="next-match-countdown"></div>
+      <div class="gifs-palmeiras">
+            <img class="gif-verdao" src="./src/gifs_palmeiras/palmeiras2.gif" />
+            <img class="gif-verdao" src="./src/gifs_palmeiras/palmeiras3.gif" />
+            <img class="gif-verdao" src="./src/gifs_palmeiras/palmeiras1.gif" />
+            <img class="gif-verdao" src="./src/gifs_palmeiras/palmeiras4.gif" />
+            <img class="gif-verdao" src="./src/gifs_palmeiras/palmeiras5.gif" />
+            <img class="gif-verdao" src="./src/gifs_palmeiras/palmeiras6.gif" />
+        </div>
+    </section>
+
+    <section id="goals-shopping" class="goals-section">
+      <div class="info-tooltip">
+            <i class="fa-solid fa-circle-info"></i>
+            <span class="tooltip-text">Click on a photo to remove it!</span>
+        </div>
+      <div class="title-goals">
+        <h2>Goals & Shopping</h2>
+        <a>A board for your dreams and a gift ideas</a>
+      
+      <div id="drop-zone" class="image-grid">
+        <div class="drop-placeholder">
+            <i class="fa-solid fa-cloud-arrow-up"></i>
+            <p>Drag & Drop your dreams here</p>
+        </div>
+    </div>
+    </div>
+    </section>
+    <audio id="anthem-audio" src="./src/audio/hino_palmeiras.mp3" preload="auto"></audio>
+    </div>
+      
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script type="module" src="./src/js/index.js"></script>
+    <script type="module" src="./src/js/firebase-config.js"></script>
+
+  </body>
+</html>

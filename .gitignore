@@ -1,0 +1,35 @@
+# Dependencies
+node_modules/
+dist/
+.firebase/
+
+# Private Config
+js/config.js
+config.js
+**/config.js
+*-config.js
+firebase-config.js
+.env
+
+# --- THE LOGS (CLEANUP) ---
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Private Audio Assets
+audio/hino_palmeiras.mp3/
+
+# Private Images Assets
+gifs_palmeiras/
+
+img/Chicken_Sprite_Sheet.png/
+img/Chicken_Sprite_Sheet_Black.png/
+img/Chicken_Sprite_Sheet_Dark_Brown.png/
+img/Chicken_Sprite_Sheet_Light_Brown.png/
+img/cats.gif/
+img/dog.gif/
+img/ectdog.gif/

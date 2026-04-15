@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Federant&family=M+PLUS+Rounded+1c&family=Playwrite+CU+Guides&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wght@0,100..900;1,100..900&family=Space+Grotesk:wght@300..700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="./src/css/styles.css" />
+    <link rel="stylesheet" href="/src/css/responsive.css" />
+    <link rel="stylesheet" href="/src/css/meds.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  <title>Medical Cabinet</title>
+</head>
+<body id="body-med">
+  <sector>
+    <div class="med-container">
+      <div class="todo-app-meds">
+        <a id="home-btn" href="index.html">Home<i class="fa-solid fa-house"></i></a>
+        <h1>Medical Cabinet 🩹</h1>
+        <form class="input-area">
+            <input
+              type="text"
+              id="input-meds"
+              class="input"
+              placeholder="Type your medicine name"
+              maxlength="45"
+            />
+        <select id="med-type" class="med-type-dropdown">
+        <option value="daily">Daily Use 💊</option>
+        <option value="nondaily">Non-Daily 📦</option>
+        </select>    
+            <button type="submit" id="add-meds-btn">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </form>
+          <h3>My meds</h3>
+          <div class="todos-container-meds">
+            <ul id="task-list-meds"></ul>
+              
+            
+            
+          </div>
+          <img class="empty-imag" src="./src/img/empty.png" alt="empty" />
+      </div>
+
+
+    </div>
+  </sector>
+
+
+  <script type="module" src="./src/js/firebase-config.js"></script>
+  <script type="module" src="./src/js/meds.js"></script>
+</body>
+</html>
+

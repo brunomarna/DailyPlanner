@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="./src/css/login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="login-body">
+    <div class="login-container">
+        <form id="login-form" class="auth-form">
+            <h2 id="auth-title">Daily Planner App 🏠</h2>
+            <div class="input-group">
+                <i class="fa-solid fa-envelope"></i>
+                <input type="email" id="email" placeholder="Email" required>
+            </div>
+            <div class="input-group">
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" id="password" placeholder="Password" required>
+                <i class="fa-solid fa-eye" id="togglePassword" style="cursor: pointer; margin-left: +85%; z-index: 10;"></i>
+            </div>
+            <div class="checkbox-forgot">
+            <label class="custom-checkbox-container">
+            <input type="checkbox" id="remember-me">
+            <span class="checkmark"></span>
+            Remember Me
+            </label>
+             <p id="forgot-password" style="cursor:pointer; font-size: 0.8rem; margin-top: 10px;">Forgot Password ?</p>
+             </div>
+            <button type="submit" id="auth-btn" class="login-btn">
+            <span class="btn-text">Enter Room</span>
+            <span class="btn-loading-text" style="display: none;">Loading...</span>
+            <div class="key-loader">
+                <i class="fa-solid fa-lock keyhole"></i>
+                <i class="fa-solid fa-key key-animation"></i>
+            </div>
+            </button>
+            <p class="toggle-text">
+                Need an account? <span id="toggle-auth">Sign Up</span>
+            </p>
+        </form>
+        <div class="bmc-container" style="margin-top: 20px; text-align: center;">
+        <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="brunomarna" data-color="#a9e8e8" data-emoji="☕" data-font="Inter" data-text="Buy Bruno a coffee" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#FFDD00"></script>
+    </div>
+    </div>
+    <!-- Toastify -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+    <!-- Firebase Scripts -->
+    <script type="module" src="./src/js/auth.js"></script>
+    <script type="module" src="./src/js/firebase-config.js"></script>
+</body>
+</html>
