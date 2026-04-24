@@ -1144,23 +1144,44 @@ document.addEventListener("DOMContentLoaded", () => {
     };  
 
     // 12.9 CHECK INSTALLMENTS
-        const checkAndProcessInstallments = async (bills) => {
-        const today = new Date();
-        const currentMY = `${today.getMonth()}-${today.getFullYear()}`;
-        if (localStorage.getItem('last_installment_check') !== currentMY) {
-            for (const bill of bills) {
-                if (bill.frequency === 'installment') {
+const checkAndProcessInstallments = async (bills) => {
+    const today = new Date();
+    // Use a unique key based on Month + Year AND Bill ID to prevent daily repeats
+    const currentMonthKey = `${today.getMonth()}-${today.getFullYear()}`;
+
+    for (const bill of bills) {
+        if (bill.frequency === 'installment') {
+            const lastCheck = localStorage.getItem(`bill_check_${bill.id}`);
+            
+            // 1. Check if we already processed THIS specific bill THIS month
+            if (lastCheck !== currentMonthKey) {
+                
+                // 2. Check if the due day has actually arrived
+                const dueDate = new Date(bill.due + 'T00:00:00');
+                
+                // If today is the due day or later in the month
+                if (today.getDate() >= dueDate.getDate()) {
                     const curr = parseInt(bill.paidInst);
                     const total = parseInt(bill.totalInst);
+
                     if (curr < total) {
-                        await updateDoc(doc(db, "bills", bill.id), { paidInst: curr + 1 });
+                        console.log(`Updating installment for ${bill.name}...`);
+                        await updateDoc(doc(db, "bills", bill.id), { 
+                            paidInst: curr + 1,
+                            // Optional: Update the due date to next month so the UI looks correct
+                            due: new Date(dueDate.setMonth(dueDate.getMonth() + 1)).toISOString().split('T')[0]
+                        });
+                        
+                        // Mark as done for this month
+                        localStorage.setItem(`bill_check_${bill.id}`, currentMonthKey);
                     }
                 }
             }
-            localStorage.setItem('last_installment_check', currentMY);
-            loadBillsFromFirebase();
         }
-    };
+    }
+    // Refresh UI after processing
+    loadBillsFromFirebase();
+};
 
     // --- 13. DREAMS & SHOPPING BOARD ---
 
